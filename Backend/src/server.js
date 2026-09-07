@@ -4,13 +4,18 @@ import path from "path";
 
 import authRoutes from "./routes/auth_route.js"
 import messageRoutes from "./routes/message_route.js"
+import { connectDB } from './lib/db.js';
+import { error } from 'console';
 
 dotenv.config();
 
 const app = express();
+const __dirname = path.resolve();
 
 const PORT = process.env.PORT || 3000;
-const __dirname = path.resolve();
+
+app.use(express.json())//middleware that gives access to the fields user sends
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
@@ -24,4 +29,21 @@ if(process.env.NODE_ENV === "production"){
     })
 }
 
-app.listen(PORT, () => console.log('Server is running on port:' + PORT));
+
+app.listen(PORT, () => {
+     console.log('Server is running on port:' + PORT)
+     connectDB();
+    });
+
+
+//TODO:switch to this when done
+/*connectDB()
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server running on PORT: ${PORT}`);
+        });
+    })
+    .catch((error) => {
+        console.error("Failed to connect to MONGODB:", error);
+        process.exit(1);
+    }); */
