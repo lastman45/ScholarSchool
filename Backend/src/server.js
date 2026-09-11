@@ -1,4 +1,5 @@
 import express from 'express';
+import cookieParser from "cookie-Parser"
 import path from "path";
 
 
@@ -16,6 +17,7 @@ const __dirname = path.resolve();
 const PORT = ENV.PORT || 3000;
 
 app.use(express.json())//middleware that gives access to the fields user sends
+app.use(cookieParser());
 
 
 app.use("/api/auth", authRoutes);
