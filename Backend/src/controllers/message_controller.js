@@ -35,9 +35,20 @@ export const getMessageByUserId = async (req, res) => {
 
 export const sendMessage = async (req, res) => {
     try {
-        const { text, image } = req.body;
+        const { text, image } = req.body; //TODO: add for files also
         const { id: receiverId } = req.params;
         const senderId = req.user._id;
+
+        if (!text && !image) {
+            return res.status(400).json({ message: "Text or Image is required."});
+        }
+        if (senderId.equals(receiverId)) {
+            return res.status(400).json({ message: "Cannot Send Message to Yourself"}); //TODO: remove this
+        }
+        const receiverExists = await User.exists({_id: receiverId});
+        if (!receiverExists) {
+            return res.status(404).json({ message: "Receiver Not Found"});
+        }
 
         let imageUrl;
         if(image) {
