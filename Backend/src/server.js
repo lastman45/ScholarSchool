@@ -1,7 +1,7 @@
 import express from 'express';
 import cookieParser from "cookie-Parser"
 import path from "path";
-
+import cors from "cors";
 
 import authRoutes from "./routes/auth_route.js"
 import messageRoutes from "./routes/message_route.js"
@@ -17,6 +17,7 @@ const __dirname = path.resolve();
 const PORT = ENV.PORT || 3000;
 
 app.use(express.json())//middleware that gives access to the fields user sends
+app.use(cors({origin:ENV.CLIENT_URL, credentials:true}));// Allows frontend to send cookies to the backend
 app.use(cookieParser());
 
 
