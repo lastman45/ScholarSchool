@@ -76,7 +76,7 @@ function SignUpPage() {
               </form>
               <div className="mt-6 text-center">
                   <Link to="/login" className="auth-link">
-                    Already have an account? Login
+                    Already have an account? Sign In
                   </Link>
               </div>
             </div>
