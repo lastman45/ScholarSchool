@@ -12,6 +12,6 @@ router.get("/chats", getChatPartners);
 router.get("/:id", getMessageByUserId);
 //TODO: add route for connecting with others randoms online
 //TODO: add group forums route
-router.get("/send/:id", sendMessage ); 
+router.post("/send/:id", sendMessage);
 
 export default router;
