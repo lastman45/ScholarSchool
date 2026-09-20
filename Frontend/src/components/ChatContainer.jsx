@@ -8,12 +8,21 @@ import MessagesLoadingSkeleton from "./MessagesLoadingSkeleton";
 
 
 function ChatContainer() {
-  const {selectedUser,getMesagesByUserId,messages, isMessagesLoading} = useChatStore();
+  const {selectedUser, getMessagesByUserId,messages, isMessagesLoading} = useChatStore();
   const { authUser } = useAuthStore();
+  const messageEndRef = useRef(null);
 
   useEffect(() => {
-    getMesagesByUserId(selectedUser._id);
-  }, [selectedUser, getMesagesByUserId]); 
+    getMessagesByUserId(selectedUser._id);
+  }, [selectedUser, getMessagesByUserId]); 
+
+  {/* Automatic self scroll */}
+  useEffect(() => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
 
   return (
     <>
@@ -45,6 +54,8 @@ function ChatContainer() {
                   </div>
                 </div>
             ))}
+             {/* Automatic self scroll */}
+            <div ref={messageEndRef} />
           </div>
         ) : isMessagesLoading ? <MessagesLoadingSkeleton />: (
           <NoChatHistoryPlaceholder  name={selectedUser.fullName}/>  

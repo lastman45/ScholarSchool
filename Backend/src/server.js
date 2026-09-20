@@ -16,7 +16,7 @@ const __dirname = path.resolve();
 
 const PORT = ENV.PORT || 3000;
 
-app.use(express.json())//middleware that gives access to the fields user sends
+app.use(express.json({ limit: "5mb" }));//middleware that gives access to the fields user sends
 app.use(cors({origin:ENV.CLIENT_URL, credentials:true}));// Allows frontend to send cookies to the backend
 app.use(cookieParser());
 

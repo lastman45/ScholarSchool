@@ -82,7 +82,7 @@ export const getChatPartners = async (req, res) => {
 
         //Find all the Messages where the Logged-in user is either a Sender or a Receiver
         const messages = await Message.find({
-            $or: [{ senderid: loggedInUserId }, { receiverId: loggedInUserId }],
+            $or: [{ senderId: loggedInUserId }, { receiverId: loggedInUserId }],
         });
 
         const chatPartnerIds = [
