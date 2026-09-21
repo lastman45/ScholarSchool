@@ -6,12 +6,10 @@ import cors from "cors";
 import authRoutes from "./routes/auth_route.js"
 import messageRoutes from "./routes/message_route.js"
 import { connectDB } from './lib/db.js';
-import { error } from 'console';
-import { ENV } from "./lib/env.js"
+import { ENV } from "./lib/env.js";
+import { app, server } from "./lib/socket.js";
 
 
-
-const app = express();
 const __dirname = path.resolve();
 
 const PORT = ENV.PORT || 3000;
@@ -34,7 +32,7 @@ if(ENV.NODE_ENV === "production"){
 }
 
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
      console.log('Server is running on port:' + PORT)
      connectDB();
     });
@@ -43,7 +41,7 @@ app.listen(PORT, () => {
 //TODO:switch to this when done
 /*connectDB()
     .then(() => {
-        app.listen(PORT, () => {
+        server.listen(PORT, () => {
             console.log(`Server running on PORT: ${PORT}`);
         });
     })
